@@ -1,5 +1,6 @@
 var rf = require('./models/readfile');
 var wf = require('./models/writefile');
+var rd = require('./models/readImg');
 module.exports = {
 	login: function(req,res){
 		function recall(data){
@@ -35,5 +36,8 @@ module.exports = {
 	},
 	wfs: function(req, res){
 		wf.writefileSync('./views/file.txt','同步写入文件内容')
+	},
+	img: function(req, res){
+		rd.readImg('./public/images/dasheng.jpg',res)
 	}
 }
