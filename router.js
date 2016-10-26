@@ -1,19 +1,20 @@
 var rf = require('./models/readfile');
 var wf = require('./models/writefile');
-var rd = require('./models/readImg');
+function getRecall(req, res){
+	res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+	function recall(data){
+		res.write(data)
+		res.end()
+	}
+	return recall;
+}
 module.exports = {
-	login: function(req,res){
-		function recall(data){
-			res.write(data)
-			res.end('OK')
-		}
+	login: function(req, res){
+		recall = getRecall(req, res);
 		rf.readfile('./views/login.html',recall)
 	},
 	register: function(req, res){
-		function recall(data){
-			res.write(data)
-			res.end('OK')
-		}
+		recall = getRecall(req, res);
 		rf.readfile('./views/register.html',recall)
 	},
 	rfs: function(req, res){
@@ -37,7 +38,8 @@ module.exports = {
 	wfs: function(req, res){
 		wf.writefileSync('./views/file.txt','同步写入文件内容')
 	},
-	img: function(req, res){
-		rd.readImg('./public/images/dasheng.jpg',res)
+	showImg: function(req, res){
+		res.writeHead(200, {'Content-Type': 'image/jpeg'})
+		rf.readImg('./public/images/dasheng.jpg', res)
 	}
 }
