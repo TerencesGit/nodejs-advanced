@@ -41,5 +41,10 @@ module.exports = {
 	showImg: function(req, res){
 		res.writeHead(200, {'Content-Type': 'image/jpeg'})
 		rf.readImg('./public/images/dasheng.jpg', res)
+	},
+	error: function(req, res, err){
+		res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+		res.write(err.toString())
+		res.end('err')
 	}
 }
