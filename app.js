@@ -7,7 +7,6 @@ http.createServer(function(req, res){
 		var pathname = url.parse(req.url).pathname;
 		pathname = pathname.replace(/\//,'');
 		router[pathname](req, res)
-		res.end(pathname+' 功能')
 	}
 }).listen(3000)
 console.log('Server running at post 3000')
