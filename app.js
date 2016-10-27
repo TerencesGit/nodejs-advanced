@@ -6,10 +6,10 @@ http.createServer(function(req, res){
 		var pathname = url.parse(req.url).pathname;
 		pathname = pathname.replace(/\//,'');
 		try{
-			//router[pathname](req, res);
-			data = router.exception(10)
-			res.write(data)
-			res.end()
+			router[pathname](req, res);
+			//data = router.exception(10)
+			//res.write(data)
+			//res.end()
 		}catch(err){
 			router.error(req, res, err)
 		}

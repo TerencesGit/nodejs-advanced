@@ -1,5 +1,6 @@
 var rf = require('./models/readfile');
 var wf = require('./models/writefile');
+var url = require('url');
 function getRecall(req, res){
 	res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
 	function recall(data){
@@ -10,6 +11,13 @@ function getRecall(req, res){
 }
 module.exports = {
 	login: function(req, res){
+		var user = url.parse(req.url,true).query;
+		if(user.name != undefined){
+			console.log(user.name)
+		}
+		if(user.password != undefined){
+			console.log(user.password)
+		}
 		recall = getRecall(req, res);
 		rf.readfile('./views/login.html',recall)
 	},

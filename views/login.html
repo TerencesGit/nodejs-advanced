@@ -12,6 +12,9 @@
         text-align: center;
         color: #00f
     }
+    .form-group{
+        margin: 20px 0;
+    }
     </style>
 </head>
 <body>
@@ -19,6 +22,17 @@
         <h1>登录页面</h1>
     </header>
     <div class="main">
+        <form action="./login" method="get">
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="">密码</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">登录</button>
+        </form>
       <img src="./showImg">
     </div>
 </body>
