@@ -45,6 +45,12 @@ module.exports = {
 	error: function(req, res, err){
 		res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
 		res.write(err.toString())
-		res.end('err')
+		res.end('error')
+	},
+	exception: function(flag){
+		if(flag == 0){
+			throw '例外情况'
+		}
+		return 'success'
 	}
 }
