@@ -27,9 +27,17 @@ module.exports = {
 		})
 		req.on('end', function(){
 			post = querystring.parse(post)
-			console.log('用户名'+post.name)
-			console.log('密码'+post.password)
-			recall = getRecall(req, res);
+			//recall = getRecall(req, res);
+			var arr = ['name','password']
+			function recall(data){
+				dataStr = data.toString()
+				for(var i = 0;i<arr.length;i++){
+					var reg = new RegExp('{'+arr[i]+'}','g');
+					dataStr = dataStr.replace(reg, post[arr[i]])
+				}
+				res.write(dataStr)
+				res.end()
+			}
 		  rf.readfile('./views/login.html',recall)
 		})
 		// recall = getRecall(req, res);
