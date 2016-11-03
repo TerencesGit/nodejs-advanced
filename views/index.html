@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style>
+    body, h1{
+        margin: 0
+    } 
+    header,
+    .main {
+        text-align: center;
+        color: #060
+    }
+    header{
+        height: 60px;
+        line-height: 60px;
+        background: #ccc;
+        overflow: hidden;
+    } 
+    header .brand{
+        float: left;
+        margin-left: 50px
+    }
+    header .navbar{
+        float: right;
+        margin-right: 100px;
+    }
+    header .navbar a{
+        text-decoration: none;
+        margin: 0 5px;
+    }
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <h1>Hello Node</h1>
+        </div>
+        <div class="navbar">
+            <a href="/loginShow">登录</a>
+            <a href="/registerShow">注册</a>
+            <a href="/userlist">用户列表</a>
+        </div>
+    </header>
+    <div class="main">
+      <h2>Node 首页</h2>
+      <img src="./showImg">
+    </div>
+</body>
+</html>

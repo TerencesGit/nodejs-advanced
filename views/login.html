@@ -4,38 +4,67 @@
     <meta charset="UTF-8">
     <title>登录页面</title>
     <style>
-    body {
-        margin: 0
+    body, h1{
+        margin: 0;
+    } 
+    header{
+        height: 60px;
+        line-height: 60px;
+        background: #ccc;
+        overflow: hidden;
     }  
     header,
     .main {
         text-align: center;
         color: #00f
     }
+    .form{
+        width: 600px;
+        margin: 50px auto;
+        padding: 50px 0;
+        border: 1px solid #ccc;
+    }
     .form-group{
-        margin: 20px 0;
+        margin: 40px 0;
+        font-size: 20px
+    }
+    .form-group label{
+        display: inline-block;
+        width: 70px;
+    }
+    input{
+        width: 250px;
+        height: 25px;
+        font-size: 16px;
+        text-indent: 1em
+    }
+    button{
+        padding: 6px 12px;
+        font-size: 16px;
+        color: #333;
+        border: 0;
+        border-radius: 5px;
+        cursor: pointer;
     }
     </style>
 </head>
 <body>
     <header>
-        <h1>登录页面</h1>
+        <h1>Hello Node</h1>
     </header>
     <div class="main">
-        <p>用户名：{name}</p>
-        <p>密码：{password}</p>
-        <form action="./login" method="post">
+        <form action="./login" method="post" class="form">
+            <h2>登录页面</h2>
             <div class="form-group">
-                <label>用户名</label>
-                <input type="text" name="name" required>
+                <label>用户名:</label>
+                <input type="text" name="username" required>
             </div>
             <div class="form-group">
-                <label for="">密码</label>
+                <label>密码:</label>
                 <input type="password" name="password" required>
             </div>
             <button type="submit">登录</button>
         </form>
-      <img src="./showImg">
     </div>
 </body>
 </html>

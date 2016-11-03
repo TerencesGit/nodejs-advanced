@@ -13,7 +13,6 @@ http.createServer(function(req, res){
 		}catch(err){
 			router.error(req, res, err)
 		}
-		
 	}
 }).listen(3000)
 console.log('Server running at post 3000')

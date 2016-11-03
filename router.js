@@ -2,6 +2,7 @@ var rf = require('./models/readfile');
 var wf = require('./models/writefile');
 var url = require('url');
 var querystring = require('querystring');
+var mysql = require('./mysqlPool');
 function getRecall(req, res){
 	res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
 	function recall(data){
@@ -11,7 +12,11 @@ function getRecall(req, res){
 	return recall;
 }
 module.exports = {
-	login: function(req, res){
+	'': function(req, res){
+		recall = getRecall(req, res);
+		rf.readfile('./views/index.html',recall)
+	},
+	logins: function(req, res){
 		//get方式
 		/*var user = url.parse(req.url,true).query;
 		if(user.name != undefined){
@@ -43,9 +48,36 @@ module.exports = {
 		// recall = getRecall(req, res);
 		// rf.readfile('./views/login.html',recall)
 	},
-	register: function(req, res){
+	loginShow: function(req, res){
+		recall = getRecall(req, res);
+		rf.readfile('./views/login.html',recall)
+	},
+	registerShow: function(req, res){
 		recall = getRecall(req, res);
 		rf.readfile('./views/register.html',recall)
+	},
+	login: function(req, res){
+		var post = '';
+		req.on('data', function(chunk){
+			post += chunk
+		})
+		req.on('end', function(){
+			post = querystring.parse(post)
+			var name = post.username;
+			var passwd = post.password;
+			mysql.insert(name, passwd)
+			recall = getRecall(req, res);
+		  rf.readfile('./views/login.html',recall)
+		})
+	},
+	selectAll: function(req, res){
+		mysql.selectAll('user',function(user){
+			for(var i = 0; i<user.length;i++){
+		  	console.log(user[i].id+'---'+user[i].username+'---'+user[i].password)
+			}
+		});
+		recall = getRecall(req, res);
+		rf.readfile('./views/login.html',recall)
 	},
 	rfs: function(req, res){
 		res.write(rf.readfileSync('./views/login.html'))

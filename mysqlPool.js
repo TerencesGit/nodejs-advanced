@@ -1,21 +1,81 @@
 var OptPool = require('./models/mysqlPoolOpt');
-
 var optPool = new OptPool();
 var pool = optPool.getPool();
 //从连接池获取连接
-pool.getConnection(function(err, conn){
+module.exports = {
 	//插入
-	// var userSql = 'insert into student value(?,?,?)';
-	// var params = [8, 'jack','math'];
-	// conn.query(userSql,params,function(err){
-	// 	if(err){
-	// 		console.log(err.message);
-	// 		return;
-	// 	}
-	// 	console.log('insert success!')
-	// 	conn.release();
-	// });
+	insert: function(name, passwd){
+		pool.getConnection(function(err, conn){
+			var sql = 'insert into user (username,password) value(?,?)';
+			var params = [name, passwd];
+			conn.query(sql, params, function(err){
+				if(err){
+					console.log(err.message);
+					return;
+				}
+				console.log('insert success!')
+				conn.release();
+			})
+		})	
+	},
 	//删除
+	delete: function(userid){
+		pool.getConnection(function(err, conn){
+			var userSql = 'delete from user where id = (?)';
+			var param =[userid];
+			conn.query(userSql, param, function(err){
+				if(err) {
+					console.log(err.message)
+					return;
+				} 
+				console.log('delete success!')
+				conn.release()
+			})
+		})
+	},
+	//修改
+	update: function(name, userid){
+		pool.getConnection(function(err, conn){
+			var sql = 'update user set username = (?) where id = (?)';
+			var params = [name , userid]
+			conn.query(sql, params, function(err){
+				if(err) {
+					console.log(err.message) 
+					return;
+				}
+				console.log('update success!')
+			})
+			conn.release()
+		})
+	},
+	//查询
+	selectAll: function(user, recall){
+		pool.getConnection(function(err, conn){
+			conn.query('select * from user', function(err, user){
+				if(err) {
+					console.log(err.message) 
+					return;
+				}
+				recall(user)
+			})
+			conn.release()
+		})
+	} 
+}
+/*
+pool.getConnection(function(err, conn){
+	插入
+	var userSql = 'insert into student value(?,?,?)';
+	var params = [8, 'jack','math'];
+	conn.query(userSql,params,function(err){
+		if(err){
+			console.log(err.message);
+			return;
+		}
+		console.log('insert success!')
+		conn.release();
+	});
+	删除
 	var delSql = 'delete from student where id = (?)';
 	var params = [3];
 	conn.query(delSql,params,function(err){
@@ -25,7 +85,7 @@ pool.getConnection(function(err, conn){
 			}
 			console.log('delete success!')
 	});
-	//修改
+	修改
 	var updateSql = 'update student set name = (?) where id = (?)';
 	params = ['tom', 2];
 	conn.query(updateSql,params,function(err){
@@ -35,7 +95,7 @@ pool.getConnection(function(err, conn){
 			}
 			console.log('update success!')
 	})
-	//查询
+	查询
 	conn.query('select * from student',function(err,result){
 		if(err){
 			console.log(err.message);
@@ -46,4 +106,4 @@ pool.getConnection(function(err, conn){
 		}
 		conn.release();
 	});
-})
+})*/
