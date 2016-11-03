@@ -48,7 +48,7 @@ module.exports = {
 			conn.release()
 		})
 	},
-	//查询
+	//查询全部
 	selectAll: function(user, recall){
 		pool.getConnection(function(err, conn){
 			conn.query('select * from user', function(err, user){
@@ -60,7 +60,46 @@ module.exports = {
 			})
 			conn.release()
 		})
-	} 
+	},
+	findById: function(userid, recall){
+		pool.getConnection(function(err, conn){
+			var sql = 'select * from user where id = (?)';
+			var param =[userid];
+			conn.query(sql,param,function(err,user){
+					if(err) {
+						console.log(err.message) 
+						return;
+					}
+					recall(user);
+			})
+		})
+	},
+	findByName: function(name, recall){
+		pool.getConnection(function(err, conn){
+			var sql = 'select * from user where username = (?)';
+			var param =[name];
+			conn.query(sql,param,function(err,user){
+					if(err) {
+						console.log(err.message) 
+						return;
+					}
+					recall(user);
+			})
+		})
+	},
+	findUser: function(name, passwd, recall){
+		pool.getConnection(function(err, conn){
+			var sql = 'select * from user where username = (?) and password = (?)';
+			var params =[name, passwd];
+			conn.query(sql, params, function(err,user){
+					if(err) {
+						console.log(err.message) 
+						return;
+					}
+					recall(user);
+			})
+		})
+	}
 }
 /*
 pool.getConnection(function(err, conn){

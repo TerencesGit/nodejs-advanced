@@ -2,14 +2,11 @@ var http = require('http');
 var url = require('url');
 var router = require('./router');
 http.createServer(function(req, res){
-	if(req.url !== '/favicon.ico'){//清除二次访问
+	if(req.url !== '/favicon.ico'){  //清除二次访问
 		var pathname = url.parse(req.url).pathname;
 		pathname = pathname.replace(/\//,'');
 		try{
 			router[pathname](req, res);
-			//data = router.exception(10)
-			//res.write(data)
-			//res.end()
 		}catch(err){
 			router.error(req, res, err)
 		}

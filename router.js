@@ -48,15 +48,15 @@ module.exports = {
 		// recall = getRecall(req, res);
 		// rf.readfile('./views/login.html',recall)
 	},
-	loginShow: function(req, res){
+	login: function(req, res){
 		recall = getRecall(req, res);
 		rf.readfile('./views/login.html',recall)
 	},
-	registerShow: function(req, res){
+	register: function(req, res){
 		recall = getRecall(req, res);
 		rf.readfile('./views/register.html',recall)
 	},
-	login: function(req, res){
+	Register: function(req, res){
 		var post = '';
 		req.on('data', function(chunk){
 			post += chunk
@@ -65,9 +65,40 @@ module.exports = {
 			post = querystring.parse(post)
 			var name = post.username;
 			var passwd = post.password;
-			mysql.insert(name, passwd)
-			recall = getRecall(req, res);
-		  rf.readfile('./views/login.html',recall)
+			mysql.findByName(name, function(user){
+				if(user.length){
+					console.log('用户名已存在！')
+					recall = getRecall(req, res);
+		  		rf.readfile('./views/register.html',recall)
+				}else{
+					mysql.insert(name, passwd)
+					console.log('注册成功！')
+					recall = getRecall(req, res);
+		  		rf.readfile('./views/login.html',recall)
+				}
+			})
+		})
+	},
+	Login: function(req, res){
+		var post = '';
+		req.on('data', function(chunk){
+			post += chunk
+		})
+		req.on('end', function(){
+			post = querystring.parse(post)
+			var name = post.username;
+			var passwd = post.password;
+			mysql.findUser(name, passwd, function(user){
+				if(user.length){
+					console.log('登录成功！')
+					recall = getRecall(req, res);
+		  		rf.readfile('./views/index.html',recall)
+				}else{
+					console.log('登录失败！')
+					recall = getRecall(req, res);
+		  		rf.readfile('./views/login.html',recall)
+				}
+			})
 		})
 	},
 	selectAll: function(req, res){
