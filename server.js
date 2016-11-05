@@ -4,9 +4,6 @@ var data = require('./models/data');
 var connect = require('connect');
 var app = connect();
 
-function getNews(id){
-	return data[id] || '文章不存在!'
-}
 app.use(function(req,res,next){
 	res.send = function send(html){
 		res.writeHead(200, {
@@ -39,6 +36,9 @@ app.use(function(req,res,next){
 			next()
   	}
 })
+function getNews(id){
+	return data[id] || '文章不存在!'
+}
 app.use(function(req,res,next){
 	if(req.pathname == '/item' && req.query.cat == '1'){
 		res.send(getNews(req.query.id))
@@ -46,16 +46,12 @@ app.use(function(req,res,next){
 		next()
 	}
 })
-app.use(function(req,res,next){
-	if(req.pathname == '/help'){
-		res.send('这里是帮助。')
-	}else{
-		next()
-	}
-})
+app.use(require('./models/help'))
 app.use(function(req,res,next){
 	res.send('<h1>页面找不到！</h1>')
 })
-var server = http.createServer(app)
+var server = http.createServer(function(req,res){
+	app(req,res)
+})
 server.listen(3000)
 console.log('server running at post 3000')
